@@ -5,21 +5,16 @@ def rank(points):
     points = rankDistance(points)
 
     for point in points:
-        rank = (point.getNearby()/point.getDistance())
+        rank = point.getNearby()*point.getDistance() - point.getToReturn()  # some algorithm
         point.setRank(rank)
 
     return points
 
 def rankNearby(points):
     for i in range(len(points)):
-        #temporary for testing
-        #points[i].setRadius(15);
-
         x1 = points[i].getPosition()[0]
         y1 = points[i].getPosition()[1]
-
         nearby = 0
-
         for j in range(len(points)):
             if j != i:
                 x2 = points[j].getPosition()[0]
@@ -49,3 +44,4 @@ def rankDistance(points):
         points[i].setDistance(distance)
 
     return points
+

@@ -10,11 +10,10 @@ import matplotlib.patches as patches
 def main():
     #randomPoints("points.txt", 20)
 
-
-    points = pointsReader("points.txt")
-
+    points = pointsReader("./res/points.txt")
+    points =  rankToFirst(points)
     finalGridList = Refine(Grid(0.0,0.0,100.0,100.0),points)
-
+    fx,fy = points[0].getPosition()
     final = []
     length = len(points)
     while len(final) != length:
@@ -33,6 +32,9 @@ def main():
         x.append(point.getPosition()[0])
         y.append(point.getPosition()[1])
 
+    x.append(fx)
+    y.append(fy)
+    
     plt.figure(1)
     plt.plot(x,y,'-o')
 
@@ -73,7 +75,7 @@ def pointsReader(fileName):
 
 def logic(points):
     #points.sort(key=lambda x: x.distance, reverse=False)
-    return sorted(points, key=lambda x: x.distance, reverse=False)
+    return sorted(points, key=lambda x: x.rank, reverse=False)
 
 def randomPoints(fileName, num):
     f = open(fileName, 'w')
@@ -84,5 +86,16 @@ def randomPoints(fileName, num):
         f.write("\n")
     f.close()
 
+def rankToFirst(points):
+    x1 = points[0].getPosition()[0]
+    y1 = points[0].getPosition()[1]
+
+    for point in points:
+        x2 = point.getPosition()[0]
+        y2 = point.getPosition()[1]
+        distance = math.sqrt(((x2-x1)*(x2-x1)) + ((y2-y1)*(y2-y1)))
+        point.setToReturn(distance)
+
+    return points
 
 main()

@@ -7,6 +7,7 @@ class Point:
         self.distance = -1
         self.position = [-1,-1]
         self.rank = 0
+        self.toReturn = 0
 
     def getId(self):
         return self.id
@@ -43,3 +44,10 @@ class Point:
 
     def getDistance(self):
         return self.distance
+
+    def getToReturn(self):
+        return self.toReturn
+
+    def setToReturn(self, toReturn):
+        self.toReturn = toReturn
+
