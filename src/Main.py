@@ -10,7 +10,7 @@ import matplotlib.patches as patches
 def main():
     #randomPoints("points.txt", 20)
 
-    points = pointsReader("points.txt")
+    points = pointsReader("points2.txt")
     points =  rankToFirst(points)
     finalGridList = Refine(Grid(0.0,0.0,100.0,100.0),points)
     fx,fy = points[0].getPosition()
