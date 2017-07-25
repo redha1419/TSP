@@ -10,51 +10,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 def main():
-<<<<<<< HEAD
-    #randomPoints("points.txt", 20)
-
-    points = pointsReader("points2.txt")
-    points =  rankToFirst(points)
-    finalGridList = Refine(Grid(0.0,0.0,100.0,100.0),points)
-    fx,fy = points[0].getPosition()
-    final = []
-    length = len(points)
-    while len(final) != length:
-        points = rank(points)
-        points = logic(points)
-        final.append(points[0])
-        points = points[1:]
-
-    for point in final:
-        print "( ", point.getPosition()[0], " ", point.getPosition()[1], " ) - ", point.getDistance()
-
-    x = []
-    y = []
-
-    for point in final:
-        x.append(point.getPosition()[0])
-        y.append(point.getPosition()[1])
-
-    x.append(fx)
-    y.append(fy)
-    
-    plt.figure(1)
-    plt.plot(x,y,'-o')
-
-    plt.figure(2)
-    plt.ylim(ymin = 0.0,ymax = 100)
-    plt.xlim(xmin = 0.0,xmax = 100)
-    for sq in finalGridList:
-        xp = sq.x1
-        yp = sq.y1
-        xdiff = sq.x2 - sq.x1
-        ydiff = sq.y2 - sq.y1
-        
-        currentAxis = plt.gca()
-        currentAxis.add_patch(patches.Rectangle((xp, yp), xdiff, ydiff, fill=None, alpha=1))
-
-    plt.show()
-=======
     #generates and creates a point list with IDs and coordinates
     randomPoints("pointsNew.txt", 20)
 
@@ -101,7 +56,6 @@ def main():
 
     #displays results using matplotlib
     displayResults(toDisplay, finalGridList, iteration, minDistance)
->>>>>>> c969ddb6778ab83276a81bcf61694ac896ba274b
 
 def pointsReader(fileName):
     pointsFile = open(fileName,"r")
