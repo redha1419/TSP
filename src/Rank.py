@@ -5,7 +5,26 @@ def rank(points):
     points = rankDistance(points)
 
     for point in points:
-        rank = (point.getNearby()**(1/2.0))*(point.getDistance())**2 - point.getToReturn()
+        # The equation below found the fifth best distance for a randomly selected constant set of points
+        #rank = (point.getNearby()**(1/2.0))*(point.getDistance())**2 - point.getToReturn()
+
+        # The equation below found the fourth shortest distance so far
+        #rank = math.sqrt(math.log(point.getNearby() + 1))*(point.getDistance())**2 - point.getToReturn()
+
+        # This equation tied for the fourth shortest distance so far
+        #rank = math.sqrt(math.log(point.getNearby() + 1))*(point.getDistance())**2 - point.getToReturn()**(1/2.0)
+
+        # This one found the third best so far
+        #rank = math.exp(math.log(point.getNearby() + 1))*(point.getDistance())**(2) - point.getToReturn()**(1/2.0)
+
+        # This found the second shortest distance for this set so far
+        #rank = math.exp(math.log(point.getNearby() + 1))*(point.getDistance()**3) - point.getToReturn()**(1/2.0)
+
+        # This one found the shortest distance so far
+        #rank = math.exp(math.log(point.getNearby() + 1))*(point.getDistance()**5) - point.getToReturn()**(1/2.0)
+
+
+        rank = math.exp(math.log(point.getNearby() + 1))*(point.getDistance()**5) - point.getToReturn()**(1/2.0)
         point.setRank(rank)
 
     return points

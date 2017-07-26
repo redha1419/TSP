@@ -11,7 +11,7 @@ import matplotlib.patches as patches
 
 def main():
     #generates and creates a point list with IDs and coordinates
-    randomPoints("pointsNew.txt", 20)
+    #randomPoints("pointsNew.txt", 40)
 
     pointsFixed = pointsReader("pointsNew.txt")
     toDisplay = pointsFixed
