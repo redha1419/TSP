@@ -8,6 +8,7 @@ class Point:
         self.position = [-1,-1]
         self.rank = 0
         self.toReturn = 0
+        self.color = "b"
 
     def getId(self):
         return self.id
@@ -50,4 +51,10 @@ class Point:
 
     def setToReturn(self, toReturn):
         self.toReturn = toReturn
+    
+    def getColor(self):
+        return self.color
+
+    def setColor(self, color):
+        self.color = color 
 

@@ -2,6 +2,7 @@ from Point import *
 from Rank import *
 from Grid import *
 from GridRefine import *
+from shapely.geometry import LineString
 import random
 import math
 import sys
@@ -13,11 +14,11 @@ def main():
     #generates and creates a point list with IDs and coordinates
     #randomPoints("pointsNew.txt", 40)
 
-    pointsFixed = pointsReader("pointsNew.txt")
+    pointsFixed = pointsReader("DjiboutiPoints.txt")
     toDisplay = pointsFixed
 
     #grids a cartesian "map"
-    finalGridList = Refine(Grid(0.0,0.0,100.0,100.0),pointsFixed)
+    finalGridList = Refine(Grid(11000,42100,12700,43800.0),pointsFixed)
     lengthFixed = len(pointsFixed)
     minDistance = sys.maxint
     iteration = 0
@@ -54,6 +55,7 @@ def main():
             toDisplay = final
             iteration = i
 
+    #toDislpay = crissCross(toDisplay)
     #displays results using matplotlib
     displayResults(toDisplay, finalGridList, iteration, minDistance)
 
@@ -118,12 +120,22 @@ def displayResults(final,finalGridList, iteration, minDistance):
 
     x = []
     y = []
+    colors = []
     for point in final:
         x.append(point.getPosition()[0])
         y.append(point.getPosition()[1])
+        colors.append(point.getColor())
+        #print point.getColor()
     
+    #plt.figure(1)
     plt.figure(1)
-    plt.plot(x,y,'-o')
+    #ax = fig.add_subplot(111, projection = '3d')
+
+    for i in range(len(x)):
+        plt.scatter(x[i], y[i], color=colors[i])
+    plt.plot(x, y)
+    #plt.show()
+    #plt.plot(x,y,colors,'-o')
 
     plt.figure(2)
     plt.ylim(ymin = 0.0,ymax = 100)
@@ -138,5 +150,53 @@ def displayResults(final,finalGridList, iteration, minDistance):
         currentAxis.add_patch(patches.Rectangle((xp, yp), xdiff, ydiff, fill=None, alpha=1))
 
     plt.show()
+
+def crissCross(points):
+    #this is not a good function! it has an n^2...and ifs lol  complexity! ... fml
+    for i in range(len(points)-1):
+        reference1 = points[i].getPosition()
+        reference2 = points[i+1].getPosition()
+        line1 = LineString([reference1,reference2])
+        #L1 = line(reference1, reference2)
+        for j in range(len(points)-1):
+            if i != j:     
+                next1 = points[j].getPosition()
+                next2 = points[j+1].getPosition()
+                line2 = LineString([next1, next2])
+                #L2 = line(next1, next2)
+                #R = intersection(L1, L2)
+                P = line1.intersection(line2)
+                try:
+                    R = []
+                    R.append(P.x)
+                    R.append(P.y)
+                except AttributeError:
+                    R = [-1,-1]     
+                if (reference1[0] < R[0] < reference2[0] and reference1[1] < R[1] <  reference2[1]) or (next1[0] < R[0] < next2[0] and next1[1] < R[1] <  next2[1]) :
+                    print "yo"
+                    points[i].setColor('r')
+                    points[i+1].setColor('r')
+                    points[j].setColor('r')
+                    points[j+1].setColor('r')
+    #...uhhh fuck
+    return points
+
+
+def line(p1, p2):
+    A = (p1[1] - p2[1])
+    B = (p2[0] - p1[0])
+    C = (p1[0]*p2[1] - p2[0]*p1[1])
+    return A, B, -C
+
+def intersection(L1, L2):
+    D  = L1[0] * L2[1] - L1[1] * L2[0]
+    Dx = L1[2] * L2[1] - L1[1] * L2[2]
+    Dy = L1[0] * L2[2] - L1[2] * L2[0]
+    if D != 0:
+        x = Dx / D
+        y = Dy / D
+        return [x,y]
+    else:
+        return [-1,-1]
 
 main()
