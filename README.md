@@ -1,5 +1,2 @@
 # TSP
-...secret...
-Attempt at cracking the Travelling Salesman Problem
-res for non code
-src for code lol
+Attempt at the Travelling Salesman Problem
